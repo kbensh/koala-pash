@@ -1,9 +1,6 @@
 #!/bin/bash
 
-WIDTH_ARG=""
-if [ $# -ge 1 ]; then
-  WIDTH_ARG="--width $1"
-fi
+PA_FLAGS="$@"
 
 sudo apt-get update -y
 sudo apt-get install -y git autoconf automake libtool build-essential cloc time gawk python3 python3-pip python3-venv
@@ -33,11 +30,7 @@ cd "$TOP/pash/python_pkgs/sh_expand"
 patch -p0 < "$TOP/infrastructure/systems/sh_expand_patch.patch"
 cd $TOP
 
-if [ -n "$WIDTH_ARG" ]; then
-  export KOALA_SHELL="$TOP/pash/pa.sh $WIDTH_ARG"
-else
-  export KOALA_SHELL="$TOP/pash/pa.sh"
-fi
+export KOALA_SHELL="$TOP/pash/pa.sh $PA_FLAGS"
 
 echo "PaSh shell is $KOALA_SHELL"
 echo "Remember to run 'source pash-venv/bin/activate' to activate the PaSh virtual environment"
