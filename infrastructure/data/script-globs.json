@@ -1,0 +1,48 @@
+{
+    "covid-mts": {
+        "scripts": ["covid-mts/scripts/*.sh"]
+    },
+    "file-enc": {
+        "scripts": ["file-enc/scripts/*.sh"]
+    },
+    "log-analysis": {
+        "scripts": ["log-analysis/scripts/*.sh"]
+    },
+    "max-temp": {
+        "scripts": ["max-temp/scripts/*.sh"]
+    },
+    "media-conv": {
+        "scripts": ["media-conv/scripts/*.sh"]
+    },
+    "nlp": {
+        "scripts": ["nlp/scripts/*.sh"]
+    },
+    "oneliners": {
+        "scripts": ["oneliners/scripts/*.sh"]
+    },
+    "sklearn": {
+        "scripts": ["sklearn/scripts/execute.sh"]
+    },
+    "riker": {
+        "scripts": ["riker/scripts/*/build.sh"]
+    },
+    "unix50": {
+        "scripts": ["unix50/scripts/*.sh"]
+    },
+    "web-index": {
+        "scripts": ["web-index/scripts/*.sh"]
+    },
+    "makeself": {
+        "scripts": ["makeself/makeself/*.sh",
+		    "makeself/makeself/test/*/*.sh"]
+    },
+    "vps-audit": {
+        "scripts": ["vps-audit/scripts/*.sh"]
+    },
+    "bio": {
+	    "scripts": ["bio/scripts/bio.sh"]
+    },
+    "aurpkg": {
+	    "scripts": ["aurpkg/scripts/pacaur.sh"]
+    }
+}
