@@ -1,4 +1,4 @@
-FROM debian:12.7
+FROM ghcr.io/binpash/pash/pash
 
 WORKDIR /benchmarks
 
@@ -21,18 +21,10 @@ ENV TC=UTC
 RUN printf '#!/bin/sh\nexec "$@"\n' > /tmp/sudo && chmod +x /tmp/sudo
 ENV PATH="/tmp:$PATH"
 
+ENV KOALA_SHELL="/opt/pash/pa.sh -d 1 -p -w 4"
+
 RUN git config --global --add safe.directory /benchmarks
 
 RUN /benchmarks/setup.sh
-
-# Run install.sh for each benchmark
-RUN set -eux; \
-    for bench in /benchmarks/*; do \
-        if [ -f "$bench/install.sh" ]; then \
-            echo "Running install.sh in $bench"; \
-            chmod +x "$bench/install.sh"; \
-            bash "$bench/install.sh"; \
-        fi; \
-    done
 
 CMD ["bash"]
