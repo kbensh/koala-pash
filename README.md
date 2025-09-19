@@ -2,7 +2,7 @@
 
 This repository evaluates the PaSh sytem using the [Koala](https://github.com/binpash/benchmarks) benchmarks for the shell. To run the benchmarks with PaSh, first install PaSh by following the instructions below. Then, set the `KOALA_SHELL` environment variable to point to the pa.sh executable:
 ```bash
-export KOALA_SHELL="/path/to/pash/pa.sh"
+export KOALA_SHELL="/path/to/pash/pa.sh -d 1 -p -w 4"
 ```
 
 ## Instructions
