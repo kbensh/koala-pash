@@ -1,6 +1,16 @@
 # PaSh Characterization
 
 This repository evaluates the PaSh sytem using the [Koala](https://github.com/binpash/benchmarks) benchmarks for the shell. To run the benchmarks with PaSh, first install PaSh by following the instructions below. Then, set the `KOALA_SHELL` environment variable to point to the pa.sh executable:
+
+To spin up and attach to the docker container with the local koala-pash dir
+mounted
+
+```bash
+docker build -t koalapash .
+docker run -it -v .:/srv koalapash
+```
+
+
 ```bash
 export KOALA_SHELL="/path/to/pash/pa.sh -d 1 -p -w 4"
 ```
