@@ -5,8 +5,9 @@
 
 cd "$(realpath "$(dirname "$0")")" || exit 1
 
-hash_folder="hashes"
+hash_folder="hashes/full"
 directory="outputs"
+tseq_output="outputs/teraseq"
 
 generate=false
 for arg in "$@"; do
@@ -15,7 +16,9 @@ for arg in "$@"; do
         continue
     fi
     case "$arg" in
-    --min) hash_folder="hashes/min" ;;
+    --min)  hash_folder="hashes/min" 
+            size=min
+            ;;
     --small) hash_folder="hashes/small" ;;
     esac
 done
@@ -23,23 +26,15 @@ done
 mkdir -p "$hash_folder"
 
 if $generate; then
-    # get total number of files
-    total_files=$(find "$directory" -maxdepth 1 -name "*.bam" | wc -l)
-
-    # Loop through all .bam files in the directory
     for file in "$directory"/*.bam; do
-        # Extract the filename without the directory path and extension
         filename=$(basename "$file" .bam)
-
-        # Generate SHA-256 hash
         hash=$(shasum -a 256 "$file" | awk '{ print $1 }')
-
-        # Save the hash to a file
         echo "$hash" > "$hash_folder/$filename.hash"
-
-        # Print the filename and hash
-        echo "File: $hash_folder/$filename.hash | SHA-256 Hash: $hash"
+        echo "$hash_folder/$filename.hash $hash"
     done
+
+    find "$tseq_output" -type f | sort | xargs md5sum > "$hash_folder/tseq_output.hashes"
+    cat "$hash_folder/tseq_output.hashes"
 
     exit 0
 fi
@@ -67,3 +62,17 @@ for file in "$directory"/*.bam; do
     # Print the filename and match
     echo "$hash_folder/$filename $match"
 done
+
+if [[ "$size" == "min" ]]; then
+    exit 0
+fi
+
+mismatch=0
+tmpfile=$(mktemp)
+find "$tseq_output" -type f | sort | xargs md5sum > "$tmpfile"
+if ! diff -q "$hash_folder/tseq_output.hashes" "$tmpfile" > /dev/null; then
+    diff -u "$hash_folder/tseq_output.hashes" "$tmpfile"
+    mismatch=1
+fi
+
+echo "teraseq $mismatch"
